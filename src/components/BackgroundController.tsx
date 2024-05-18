@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Slider } from "./ui/slider";
 import ColorPickerController from "./ColorPickerController";
+import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 
 function BackgroundController() {
-  const [rounded, setRounded] = useState(20);
-  const [padding, setPadding] = useState(10);
-  const [color, setColor] = useState("#333fff");
-  const storageValue = JSON.parse(localStorage.getItem("bgValue") || "{}");
+  const storageValue = JSON.parse(localStorage.getItem("value") || "{}");
+  const [rounded, setRounded] = useState(
+    storageValue ? storageValue.bgRounded : 0,
+  );
+  const [padding, setPadding] = useState(storageValue ? storageValue.bgPadding : 0);
+  const [color, setColor] = useState(storageValue ? storageValue.bgColor : "#fff");
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const updateValue = {
@@ -15,8 +19,9 @@ function BackgroundController() {
       bgPadding: padding,
       bgColor: color,
     };
-    localStorage.setItem("bgValue", JSON.stringify(updateValue));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setUpdateStorage(updateValue);
+    localStorage.setItem("value", JSON.stringify(updateValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rounded, padding, color]);
 
   return (
@@ -30,6 +35,7 @@ function BackgroundController() {
             min={0}
             max={512}
             step={1}
+            defaultValue={[rounded]}
             onValueChange={(value) => setRounded(value[0])}
           />
         </div>
@@ -40,10 +46,10 @@ function BackgroundController() {
         </label>
         <div className="w-full">
           <Slider
-            min={10}
+            min={0}
             max={100}
             step={1}
-            defaultValue={[40]}
+            defaultValue={[padding]}
             onValueChange={(value) => setPadding(value[0])}
           />
         </div>

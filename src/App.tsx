@@ -5,13 +5,18 @@ import SideNav from "./components/SideNav";
 import BackgroundController from "./components/BackgroundController";
 import FontController from "./components/FontController";
 import LogoPreview from "./components/LogoPreview";
+import { UpdateStorageContext } from "./context/UpdateStorageContext";
 
 function App() {
   // state selectIndex
 
   const [selectedIndex, setSelectedIndex] = useState<number>();
+  
+  const [updateStorage, setUpdateStorage] = useState({});  
+  
 
   return (
+    <UpdateStorageContext.Provider value={{updateStorage, setUpdateStorage}}>
     <div className="flex h-screen w-full flex-col">
       <Header />
       <div className="flex flex-col md:flex-row">
@@ -28,6 +33,8 @@ function App() {
         </div>
       </div>
     </div>
+
+    </UpdateStorageContext.Provider>
   );
 }
 

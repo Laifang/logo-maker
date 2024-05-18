@@ -1,16 +1,20 @@
 import { SmilePlus } from "lucide-react";
 import { Slider } from "./ui/slider";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController";
+import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 
 function IconController() {
+  const storageValue = JSON.parse(localStorage.getItem("value") || "{}");
   //state Icon size
-  const [size, setSize] = useState(280);
-  const [rotate, setRotate] = useState(0);
-  const [selectedColor, setSelectedColor] = useState("#fff");
-  
-  const storageValue =
-    JSON.parse(localStorage.getItem("IconValue")||"{}");
+  const [size, setSize] = useState(storageValue ? storageValue?.IconSize : 280);
+  const [rotate, setRotate] = useState(
+    storageValue ? storageValue.IconRotate : 0,
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    storageValue ? storageValue.IconColor : "#fff",
+  );
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
 
   // 将 size,rotate,selectedColor 存储到 浏览器的 localStorage 中
   useEffect(() => {
@@ -19,10 +23,11 @@ function IconController() {
       IconSize: size,
       IconRotate: rotate,
       IconColor: selectedColor,
-      Icon: "Smile",
+      IconName: "Smile",
     };
-    localStorage.setItem("IconValue", JSON.stringify(updateIconValue));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setUpdateStorage(updateIconValue);
+    localStorage.setItem("value", JSON.stringify(updateIconValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size, rotate, selectedColor]);
 
   return (
@@ -41,7 +46,7 @@ function IconController() {
               min={32}
               max={512}
               step={2}
-              defaultValue={[280]}
+              defaultValue={[size]}
               onValueChange={(value) => setSize(value[0])}
             />
           </div>
@@ -55,7 +60,7 @@ function IconController() {
               min={0}
               max={359}
               step={1}
-              defaultValue={[0]}
+              defaultValue={[rotate]}
               onValueChange={(value) => setRotate(value[0])}
             />
           </div>
