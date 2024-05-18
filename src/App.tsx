@@ -4,6 +4,7 @@ import IconController from "./components/IconController";
 import SideNav from "./components/SideNav";
 import BackgroundController from "./components/BackgroundController";
 import FontController from "./components/FontController";
+import LogoPreview from "./components/LogoPreview";
 
 function App() {
   // state selectIndex
@@ -13,17 +14,17 @@ function App() {
   return (
     <div className="flex h-screen w-full flex-col">
       <Header />
-      <div className="flex md:flex-row flex-col">
-        <div className="flex w-1/6 items-start">
-          <SideNav changeSelectedIndex={(index)=>setSelectedIndex(index)}/>
+      <div className="flex flex-col md:flex-row">
+        <div className="flex w-2/12 items-start">
+          <SideNav changeSelectedIndex={(index) => setSelectedIndex(index)} />
         </div>
-        <div className="flex md:w-2/6 w-5/6 border">
-          {selectedIndex === 0 && <IconController/>}
-          {selectedIndex === 1 && <BackgroundController/>}
-          {selectedIndex === 2 && <FontController/>}
+        <div className="flex w-5/6 min-w-min overflow-auto border md:w-3/12">
+          {selectedIndex === 0 && <IconController />}
+          {selectedIndex === 1 && <BackgroundController />}
+          {selectedIndex === 2 && <FontController />}
         </div>
-        <div className="flex md:w-3/6 w-6/6 border bg-blue-200">
-         预览区域
+        <div className="w-6/6 flex border md:w-7/12">
+          <LogoPreview />
         </div>
       </div>
     </div>

@@ -1,18 +1,35 @@
 import { SmilePlus } from "lucide-react";
 import { Slider } from "./ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController";
 
 function IconController() {
   //state Icon size
   const [size, setSize] = useState(280);
   const [rotate, setRotate] = useState(0);
+  const [selectedColor, setSelectedColor] = useState("#fff");
+  
+  const storageValue =
+    JSON.parse(localStorage.getItem("IconValue")||"{}");
+
+  // 将 size,rotate,selectedColor 存储到 浏览器的 localStorage 中
+  useEffect(() => {
+    const updateIconValue = {
+      ...storageValue,
+      IconSize: size,
+      IconRotate: rotate,
+      IconColor: selectedColor,
+      Icon: "Smile",
+    };
+    localStorage.setItem("IconValue", JSON.stringify(updateIconValue));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size, rotate, selectedColor]);
 
   return (
     <div className="w-full p-4">
       <div>
         <label>图标</label>
-        <div className="flex itmes-center  size-10 justify-center rounded-xl bg-gray-200 p-3">
+        <div className="itmes-center flex  size-10 justify-center rounded-xl bg-gray-200 p-3">
           <SmilePlus size={16} />
         </div>
         <div className="w-full">
@@ -48,7 +65,9 @@ function IconController() {
             图标颜色
           </label>
           <div className="w-full">
-            <ColorPickerController />
+            <ColorPickerController
+              setSelectedColor={(color) => setSelectedColor(color)}
+            />
           </div>
         </div>
       </div>
