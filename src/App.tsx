@@ -10,7 +10,7 @@ import { UpdateStorageContext } from "./context/UpdateStorageContext";
 function App() {
   // state selectIndex
 
-  const [selectedIndex, setSelectedIndex] = useState<number>();
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   
   const [updateStorage, setUpdateStorage] = useState({});  
   

@@ -3,28 +3,37 @@ import { icons } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 
 interface StorageData {
-  bgColor: string;
-  bgRounded: number;
-  bgPadding: number;
-  IconSize: number;
-  IconRotate: string;
-  IconColor: string;
-  IconName: string;
+  bgColor?: string;
+  bgRounded?: number;
+  bgPadding?: number;
+  IconSize?: number;
+  IconRotate?: string;
+  IconColor?: string;
+  IconName?: string;
 }
+
+// Icon type
+type IconName = keyof typeof icons;
+type IconProps = {
+  name: IconName;
+  color?: string;
+  size?: number;
+  rotate?: string;
+};
 
 function LogoPreview() {
   const [storageValue, setStorageValue] = useState<StorageData>();
-  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
+  const { updateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const storageData = JSON.parse(localStorage.getItem("value") || "{}");
     setStorageValue(storageData);
   }, [updateStorage]);
 
-  const Icon = ({ name, color, size,rotoate }) => {
+  const Icon = ({ name, color, size ,rotate}: IconProps) => {
     const LucidIcon = icons[name];
     if (!LucidIcon) return;
-    return <LucidIcon size={size} color={color} style={{ transform: `rotate(${storageValue?.IconRotate}deg)` }} />;
+    return <LucidIcon size={size} color={color} style={{ transform: `rotate(${rotate}deg)` }} />;
   };
 
   return (
@@ -41,10 +50,10 @@ function LogoPreview() {
           }}
         >
           <Icon
-            name={storageValue?.IconName}
+            name={storageValue?.IconName as IconName}
             color={storageValue?.IconColor}
             size={storageValue?.IconSize}
-            rotoate={storageValue?.IconRotate}
+            rotate={storageValue?.IconRotate}
           />
         </div>
       </div>

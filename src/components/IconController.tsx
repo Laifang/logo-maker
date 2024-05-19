@@ -5,21 +5,20 @@ import ColorPickerController from "./ColorPickerController";
 import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 
 function IconController() {
-  const storageValue = JSON.parse(localStorage.getItem("value") || "{}");
+  const InitialValue = JSON.parse(localStorage.getItem("value") || "{}");
+
   //state Icon size
-  const [size, setSize] = useState(storageValue ? storageValue?.IconSize : 280);
-  const [rotate, setRotate] = useState(
-    storageValue ? storageValue.IconRotate : 0,
-  );
+  const [size, setSize] = useState(InitialValue.IconSize || 280);
+  const [rotate, setRotate] = useState(InitialValue.IconRotate || 0);
   const [selectedColor, setSelectedColor] = useState(
-    storageValue ? storageValue.IconColor : "#fff",
+    InitialValue.IconColor || "#fff",
   );
-  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
+  const { setUpdateStorage } = useContext(UpdateStorageContext);
 
   // 将 size,rotate,selectedColor 存储到 浏览器的 localStorage 中
   useEffect(() => {
     const updateIconValue = {
-      ...storageValue,
+      ...InitialValue,
       IconSize: size,
       IconRotate: rotate,
       IconColor: selectedColor,

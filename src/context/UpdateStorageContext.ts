@@ -4,4 +4,4 @@ type UpdateStorageContextType = {
     setUpdateStorage: (updateStorage: object) => void
 }
 
-export const UpdateStorageContext = React.createContext<UpdateStorageContextType | undefined>(undefined);
+export const UpdateStorageContext = React.createContext<UpdateStorageContextType>({updateStorage: {}, setUpdateStorage: () => {}});
