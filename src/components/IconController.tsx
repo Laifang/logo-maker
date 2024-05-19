@@ -1,8 +1,8 @@
-import { SmilePlus } from "lucide-react";
 import { Slider } from "./ui/slider";
 import { useContext, useEffect, useState } from "react";
 import ColorPickerController from "./ColorPickerController";
 import { UpdateStorageContext } from "@/context/UpdateStorageContext";
+import IconList from "./IconList";
 
 function IconController() {
   const InitialValue = JSON.parse(localStorage.getItem("value") || "{}");
@@ -13,6 +13,8 @@ function IconController() {
   const [selectedColor, setSelectedColor] = useState(
     InitialValue.IconColor || "#fff",
   );
+  const [icon, setIcon] = useState<string>(InitialValue.IconName || "Smile");
+
   const { setUpdateStorage } = useContext(UpdateStorageContext);
 
   // 将 size,rotate,selectedColor 存储到 浏览器的 localStorage 中
@@ -22,20 +24,17 @@ function IconController() {
       IconSize: size,
       IconRotate: rotate,
       IconColor: selectedColor,
-      IconName: "Smile",
+      IconName: icon,
     };
     setUpdateStorage(updateIconValue);
     localStorage.setItem("value", JSON.stringify(updateIconValue));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size, rotate, selectedColor]);
+  }, [size, rotate, selectedColor,icon]);
 
   return (
     <div className="w-full p-4">
       <div>
-        <label>图标</label>
-        <div className="itmes-center flex  size-10 justify-center rounded-xl bg-gray-200 p-3">
-          <SmilePlus size={16} />
-        </div>
+       <IconList setSelectedIcon={(icon)=>setIcon(icon)}/>
         <div className="w-full">
           <label className="flex items-center justify-between p-4">
             大小 <span>{size} px</span>
