@@ -14,11 +14,12 @@ function App() {
   
   const [updateStorage, setUpdateStorage] = useState({});  
   
+  const [downloadPngLogo, setDownloadPngLogo] = useState<boolean>(false);
 
   return (
     <UpdateStorageContext.Provider value={{updateStorage, setUpdateStorage}}>
     <div className="flex h-screen w-full flex-col">
-      <Header />
+      <Header setDownloadPngLogo={setDownloadPngLogo}/>
       <div className="flex flex-col md:flex-row">
         <div className="flex w-2/12 items-start">
           <SideNav changeSelectedIndex={(index) => setSelectedIndex(index)} />
@@ -29,7 +30,7 @@ function App() {
           {selectedIndex === 2 && <FontController />}
         </div>
         <div className="w-6/6 flex border md:w-7/12">
-          <LogoPreview />
+          <LogoPreview downloadPngLogo={downloadPngLogo} setDownloadPngLogo={setDownloadPngLogo}/>
         </div>
       </div>
     </div>

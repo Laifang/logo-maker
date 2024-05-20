@@ -28,7 +28,7 @@ function IconList({ setSelectedIcon }: IconListProps) {
     const [dialogOpen, setDialogOpen] = useState(false);
     // 定义一个状态变量，用于在图标选择按钮动态显示已选中的图标
     const [menuIcon, setMenuIcon] = useState<string>(
-        InitialValue.iconName || "Smile",
+        InitialValue.IconName || "Smile",
     );
     // 定义Icon 组件 用于动态渲染图标
     const Icon = ({ name, color, size }: IconProps) => {

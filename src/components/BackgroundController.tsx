@@ -6,18 +6,18 @@ import { UpdateStorageContext } from "@/context/UpdateStorageContext";
 function BackgroundController() {
   const InitialValue = JSON.parse(localStorage.getItem("value") || "{}");
   const [rounded, setRounded] = useState(
-     InitialValue.bgRounded || 0,
+     InitialValue.BgRounded || 0,
   );
-  const [padding, setPadding] = useState( InitialValue.bgPadding || 0);
-  const [color, setColor] = useState( InitialValue.bgColor || "#000");
+  const [padding, setPadding] = useState( InitialValue.BgPadding || 0);
+  const [color, setColor] = useState( InitialValue.BgColor || "#000");
   const { setUpdateStorage } = useContext(UpdateStorageContext);
 
   useEffect(() => {
     const updateValue = {
       ...InitialValue,
-      bgRounded: rounded,
-      bgPadding: padding,
-      bgColor: color,
+      BgRounded: rounded,
+      BgPadding: padding,
+      BgColor: color,
     };
     setUpdateStorage(updateValue);
     localStorage.setItem("value", JSON.stringify(updateValue));
