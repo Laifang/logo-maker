@@ -41,7 +41,7 @@ function LogoPreview({ downloadPngLogo, setDownloadPngLogo }: Props) {
       handleDownloadLogo();
       setDownloadPngLogo(false);
     }
-  }, [downloadPngLogo]);
+  }, [downloadPngLogo, setDownloadPngLogo]);
 
   function handleDownloadLogo() {
     const sourceHtml = document.getElementById("png-logo") as HTMLElement;
